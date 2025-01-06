@@ -1,50 +1,46 @@
 #include <iostream>
+#include <memory>
 #include <bits/stdc++.h>
-
 using namespace std;
 class Vehicle{
     public:
-     virtual void delivery()=0;
+    virtual void delivery()=0;
 };
-
-class Car:public Vehicle{
-    public:
-        void delivery() override{
-            cout<<"Delivery by car"<<endl;
-        }
-};
-
 class Bus:public Vehicle{
- public:
-        void delivery() override{
-            cout<<"Delivery by bus"<<endl;
-        }
+    public:
+    void delivery(){
+        cout<<"Delivery by Bus"<<endl;
+    }
 };
+class Tempo:public Vehicle{
+    public:
+    void delivery(){
+        cout<<"Delivery by Tempo"<<endl;
+    }
 
+};
 class VehicleFactory{
     public:
-        virtual Vehicle* createVehicle()=0;
+        virtual shared_ptr<Vehicle> createVehicle()=0;
 };
-
-class CarFactory:public VehicleFactory{
- public:
-         Vehicle* createVehicle() override{
-            return new Car();
-        } 
-};
-
 class BusFactory:public VehicleFactory{
- public:
-        Vehicle* createVehicle() override{
-            return new Bus();
-        } 
+    public:
+    shared_ptr<Vehicle> createVehicle(){
+        return make_shared<Bus>();
+    }
+};
+class TempoFactory:public VehicleFactory{
+   public:
+    shared_ptr<Vehicle> createVehicle(){
+        return make_shared<Tempo>();
+    }
 };
 int main(){
-    VehicleFactory *car_factory=new CarFactory();
-    VehicleFactory *bus_factory=new BusFactory();
-    Vehicle *car=car_factory->createVehicle();
-    Vehicle *vehicle=bus_factory->createVehicle();
-    car->delivery();
-    vehicle->delivery();
+    shared_ptr<VehicleFactory> bus_factory=make_shared<BusFactory>();
+    shared_ptr<VehicleFactory> tempo_factory=make_shared<TempoFactory>();
+    shared_ptr<Vehicle>  bus=bus_factory->createVehicle();
+    shared_ptr<Vehicle>  tempo=tempo_factory->createVehicle();
+    bus->delivery();
+    tempo->delivery();
     return 0;
 }
