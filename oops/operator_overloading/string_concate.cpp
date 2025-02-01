@@ -12,19 +12,20 @@ class String{
         this->string=new char[size+1];
         strcpy(this->string,string);
     }
-    String operator+(String string_obj){
-        String s;
-        s.size=this->size+string_obj.size;
-        s.string=new char[s.size+1];
-        strcat(this->string,string_obj.string);
-        strcpy(s.string,this->string);
-        return s;
-    }
+    String operator+(String string_obj);
     void display(){
         std::cout<<"string:"<<string<<",len:"<<size<<std::endl;
     }
       
 };
+String String::operator+(String string_obj){
+  String s;
+        s.size=this->size+string_obj.size;
+        s.string=new char[s.size+1];
+        strcat(this->string,string_obj.string);
+        strcpy(s.string,this->string);
+        return s;
+}
 int main(){
     String s1("Ram ");
     String s2("is a good boy");
