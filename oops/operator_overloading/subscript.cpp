@@ -19,6 +19,7 @@ int main(){
     int some_array[]={9,0,8,7};
     Array arr(some_array);
     for(int i=0;i<4;i++){
-        cout<<arr[i]<<endl;
+        cout<<arr[i]<<",";
     }
+    cout<<endl;
 }
