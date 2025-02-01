@@ -7,11 +7,13 @@ class String{
     String(){
 
     }
+
     String(char *string){
         size=strlen(string);
         this->string=new char[size+1];
         strcpy(this->string,string);
     }
+    
     friend String operator+(String string_obj1,String string_obj2);
     void display(){
         std::cout<<"string:"<<string<<",len:"<<size<<std::endl;

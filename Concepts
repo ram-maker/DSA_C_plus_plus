@@ -1,3 +1,4 @@
 Friend function and this pointer
 This operator doesnt work inside friend fucntion becuase friend function are not tied to the object; their sole purpose is to use the primary member
-Moreover,
+Vector,
+the every insert on vector is likelt to change the memory address, thus if you take reference of first element as reference, and you insert afterwards, and take very first as reference you are liekly to encounter mistake, so never ever access it, rather use vector.begin() and vector.end()
