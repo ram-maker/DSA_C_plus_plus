@@ -20,7 +20,10 @@ int main(){
     printList(lista);
     lista.merge(listb);
     printList(lista);
-    auto size=lista.size();
+    auto first_refernce_element=lista.begin();
+    advance(first_refernce_element,1);
+    *(first_refernce_element)=300;
+    printList(lista);
     return 0;
 
 }
