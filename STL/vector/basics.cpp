@@ -19,6 +19,8 @@ int main(){
     v.insert(v.begin()+1,20);
     printVector(v);
     v.erase(v.begin()+2);
+    auto sth=v.at(5);
+    cout<<"sth: "<<sth<<endl;
     printVector(v);
    
 }
