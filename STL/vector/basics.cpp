@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 void printVector(vector<int> vecs){
@@ -18,9 +19,11 @@ int main(){
     printVector(v);
     v.insert(v.begin()+1,20);
     printVector(v);
-    v.erase(v.begin()+2);
-    auto sth=v.at(5);
-    cout<<"sth: "<<sth<<endl;
+    sort(v.begin(),v.end(),greater<int>());
+    printVector(v);
+    sort(v.begin(),v.end());
+    printVector(v);
+    sort(v.begin(),v.end(),greater_equal<int>());
     printVector(v);
    
 }

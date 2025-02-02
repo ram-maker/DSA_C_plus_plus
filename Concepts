@@ -9,3 +9,8 @@ when you insert in the very indesx in that field, it adds to that index and rest
 
 List
 random acces to list is not permitted
+soritng in Vector vs list
+In list:
+list.sort()
+In vector:
+sort(vector.begin(),vector.end())

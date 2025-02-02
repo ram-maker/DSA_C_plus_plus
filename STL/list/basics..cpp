@@ -9,10 +9,18 @@ void printList(list<int> given_list){
 }
 
 int main(){
-      list<int> some_list = {23, 34, 8, 9, 0};
-    printList(some_list);
-    some_list.sort();
-    printList(some_list);
+    list<int> lista = {23, 34, 8, 9, 0};
+    printList(lista);
+    lista.sort();
+    printList(lista);
+    auto listb={3,90,12,67};
+    lista.sort(greater<int>());
+    printList(lista);
+    lista.reverse();
+    printList(lista);
+    lista.merge(listb);
+    printList(lista);
+    auto size=lista.size();
     return 0;
 
 }
