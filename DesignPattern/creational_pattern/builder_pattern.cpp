@@ -1,82 +1,108 @@
 #include <iostream>
+#include <cstring>
+#include <memory>
 using namespace std;
-class Url{
-    private:
-    string host_name="";
-    string protocol_name="";
-    string port_name="";
-    string param_name="";
-    string query_param="";
+class MediaFile{
+    bool is_audio=false;
+    bool is_video=false;
+    char *  audio_codec="";
+    char * video_codec="";
+    char * container="";
     public:
-        void setHost(const string &host_name){
-            this->host_name=host_name;
-        }
-        void setProtocol(const string &protocol_name){
-            this->protocol_name=protocol_name;
-        }
-        void setPort(const string &port_name){
-            this->port_name=port_name;
-        }
-        void setParamPath(const string &param_name){
-            this->param_name=param_name;
-        }
-        void setQueryParam(const string &query_param){
-            this->query_param=query_param;
-        }
-        void display(){
-            cout<<"Url: ";
-            cout<<this->protocol_name<<"://"<<this->host_name<<"/"<<this->param_name<<"?"<<this->query_param<<endl;
-        }
+    void setIsAudio(bool is_image){
+        this->is_audio=is_image;
+    }
+    
+    void setIsVideo(bool is_video){
+        this->is_video=is_video;
+    }
 
-};
-class UrlBuilder{
-    private:
-        Url url;
-    public:
-        UrlBuilder& setHost(const string &host_name){
-            url.setHost(host_name);
-            return *this;
-        }
+    void setAudioCodec(char * audio_codec){
+        this->audio_codec=new char [strlen(audio_codec)+1];
+        strcpy(this->audio_codec,audio_codec);
+    }
 
-        UrlBuilder& setProtocol(const string &protocol_name){
-            url.setProtocol(protocol_name);
-            return *this;
-        }
+    void setVideoCodec(char * video_codec){
+          this->video_codec=new char [strlen(video_codec)+1];
+        strcpy(this->video_codec,video_codec);
+    }
 
-        UrlBuilder& setPort(const string &port){
-            url.setPort(port);
-            return *this;
-        }
+    void setContainer(char * container){
+          this->container=new char [strlen(container)+1];
+        strcpy(this->container,container);
+    }
 
-        UrlBuilder& setParamPath(const string &param_path){
-            url.setParamPath(param_path);
-            return *this;
-        }
-
-        UrlBuilder& setQueryParam(const string &query_param){
-            url.setParamPath(query_param);
-            return *this;
-        }
-
-        Url build(){
-            return url;
-        }
+    void display(){
+        cout<<"is_audio:"<<is_audio<<endl;
+        cout<<"is_video:"<<is_video<<endl;
+        cout<<"audio_codec:"<<audio_codec<<endl;
+        cout<<"video_codec:"<<video_codec<<endl;
+        cout<<"container:"<<container<<endl;
+    }
     
 };
-class UrlDirector{
+
+class MediaFileBuilder{
     public:
-        Url build(UrlBuilder url_builder){
-            return url_builder.setProtocol("http")
-            .setHost("localhost:8000")
-            .setPort("80")
-            .build();
-        }
-    
+    virtual void buildIsAudio()=0;
+    virtual void buildIsVideo()=0;
+    virtual void buildAudioCodec()=0;
+    virtual void buildVideoCodec()=0;
+    virtual void buildContainer()=0;
+    virtual MediaFile build()=0;
+
 };
+
+class OpusCodecBuilder:public MediaFileBuilder{
+    private:
+    shared_ptr<MediaFile> media_file;
+    public:
+    OpusCodecBuilder(){
+        media_file=make_shared<MediaFile>();
+    }
+
+    void buildIsAudio(){
+        media_file->setIsAudio(true);
+    }
+
+    void buildIsVideo(){
+        media_file->setIsVideo(false);
+    }
+
+    void buildAudioCodec(){
+        media_file->setAudioCodec("opus");
+    }
+
+    void buildVideoCodec(){
+        media_file->setVideoCodec("None");
+    }
+
+    void buildContainer(){
+        media_file->setContainer("opus");
+    }
+
+    MediaFile build(){
+        return *media_file;
+    }
+        
+};
+
+class MediaFileDirector{
+    public:
+    MediaFile constrcutMediaFile(OpusCodecBuilder &builder){
+        builder.buildIsAudio();
+        // builder.buildVideoCodec();
+        // builder.buildIsImage();
+        // builder.buildContainer();
+        return builder.build();
+
+    }
+};
+
 int main(){
-    UrlBuilder url_builder;
-    UrlDirector urldirecor;
-    Url url=urldirecor.build(url_builder);
-    url.display();
+    OpusCodecBuilder opus_builder;
+    MediaFileDirector director;
+    MediaFile media_file=director.constrcutMediaFile(opus_builder);
+    media_file.display();
     return 0;
 }

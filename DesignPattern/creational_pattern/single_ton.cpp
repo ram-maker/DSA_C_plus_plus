@@ -10,7 +10,7 @@ class DbConnection{
         static DbConnection db_connection;
         return db_connection;
     }
-   
+ 
 };
 
 int main(){
