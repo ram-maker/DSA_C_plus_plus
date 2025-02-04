@@ -45,11 +45,6 @@ public:
         cout << "container: " << (container ? container : "null") << endl;
     }
 
-    // ~MediaFile() {
-    //     delete[] audio_codec;
-    //     delete[] video_codec;
-    //     delete[] container;
-    // }
 };
 
 class MediaFileBuilder {
@@ -103,7 +98,7 @@ public:
 
 class MediaFileDirector {
 public:
-    MediaFile constructMediaFile(OpusCodecBuilder& builder) {
+    MediaFile constructMediaFile(MediaFileBuilder& builder) {
         return builder.buildAudioCodec()
             //    .buildIsAudio()
                .buildContainer()
