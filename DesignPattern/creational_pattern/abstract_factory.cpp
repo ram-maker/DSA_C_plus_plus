@@ -48,7 +48,7 @@ class CodecFactory{
     virtual shared_ptr<VideoCodec> createVideoCodec()=0;
 };
 
-class LeightWeightCodec:public CodecFactory{
+class LightWeightFactory:public CodecFactory{
     public:
     shared_ptr<AudioCodec> createAudioCodec(){
         return make_shared<AAC>();
@@ -59,7 +59,7 @@ class LeightWeightCodec:public CodecFactory{
 
 };
 
-class HighQualityCodec:public CodecFactory{
+class HighQualityFactory:public CodecFactory{
      public:
     shared_ptr<AudioCodec> createAudioCodec(){
         return make_shared<MP3>();
@@ -70,13 +70,13 @@ class HighQualityCodec:public CodecFactory{
 };
 
 int main(){
-    shared_ptr<CodecFactory> high_quality_codec=make_shared<LeightWeightCodec>();
+    shared_ptr<CodecFactory> high_quality_codec=make_shared<LightWeightFactory>();
   shared_ptr<AudioCodec> mp3_codec=high_quality_codec->createAudioCodec();
   shared_ptr<VideoCodec> h265_codec=high_quality_codec->createVideoCodec();
   cout<<"Frame size of mp3 codec="<<mp3_codec->getFrameSampleSize()<<endl;
   cout<<"Frame size of h265 codec="<<h265_codec->getFrameRate()<<endl;
 
-   shared_ptr<CodecFactory> low_quality_codec=make_shared<HighQualityCodec>();
+   shared_ptr<CodecFactory> low_quality_codec=make_shared<HighQualityFactory>();
   shared_ptr<AudioCodec> aac_codec=low_quality_codec->createAudioCodec();
   shared_ptr<VideoCodec> h264_codec=low_quality_codec->createVideoCodec();
   cout<<"Frame size of aac codec="<<aac_codec->getFrameSampleSize()<<endl;
