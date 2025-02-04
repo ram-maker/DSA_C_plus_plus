@@ -1,0 +1,15 @@
+Dependency Injection:
+In complex softwares, it is obvious for a class to depend on other classes. Instead of constructing and maintainging the dependent object within a class scope, its rather a good practice
+to have some object already created. For instance, suppose we do have a car class that depends on engine. So rather than creating an engine within class, its a good practice to 
+fetch enginer object. This reduces a burdern of creating an enginer object inside car method. Moreover, it makes program more scaleable and modular.
+Real-World Analogy
+Association: A teacher teaches a student. The teacher and the student can exist independently of each other.
+Aggregation: A school has teachers. Teachers can exist outside the school.
+Composition: A car has an engine. If the car is destroyed, the engine is no longer usable.
+Would you like an example in code or more clarification on any of these?
+
+
+object slicing
+ Object slicing is the phenomenon that occurs when an object of a derived class is assigned or passed to an object of the base class type, leading to the loss of the derived class-specific data and behavior.
+
+ 
