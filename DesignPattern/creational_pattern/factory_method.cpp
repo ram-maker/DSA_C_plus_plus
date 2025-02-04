@@ -2,45 +2,49 @@
 #include <memory>
 #include <bits/stdc++.h>
 using namespace std;
-class Vehicle{
+class Document{
     public:
-    virtual void delivery()=0;
+    virtual void renderPage()=0;
 };
-class Bus:public Vehicle{
+class Pdf:public Document{
     public:
-    void delivery(){
-        cout<<"Delivery by Bus"<<endl;
+    void renderPage(){
+        cout<<"Rendering page for PDF"<<endl;
     }
 };
-class Tempo:public Vehicle{
+class Excel:public Document{
     public:
-    void delivery(){
-        cout<<"Delivery by Tempo"<<endl;
+    void renderPage(){
+        cout<<"Rendering page for Excel"<<endl;
     }
+};
+class Word:public Document{
+ public:
+    void renderPage(){
+        cout<<"Rendering page for Word"<<endl;
+    }
+};
+class DocumentFactory{
+    public:
+    virtual shared_ptr<Document> createDocument()=0;
 
 };
-class VehicleFactory{
+class PdfFactory:public DocumentFactory{
     public:
-        virtual shared_ptr<Vehicle> createVehicle()=0;
-};
-class BusFactory:public VehicleFactory{
-    public:
-    shared_ptr<Vehicle> createVehicle(){
-        return make_shared<Bus>();
+    shared_ptr<Document> createDocument(){
+        return make_shared<Pdf>();
     }
 };
-class TempoFactory:public VehicleFactory{
-   public:
-    shared_ptr<Vehicle> createVehicle(){
-        return make_shared<Tempo>();
+class WordFactory:public DocumentFactory{
+    public:
+    shared_ptr<Document> createDocument(){
+        return make_shared<Word>();
+
     }
 };
 int main(){
-    shared_ptr<VehicleFactory> bus_factory=make_shared<BusFactory>();
-    shared_ptr<VehicleFactory> tempo_factory=make_shared<TempoFactory>();
-    shared_ptr<Vehicle>  bus=bus_factory->createVehicle();
-    shared_ptr<Vehicle>  tempo=tempo_factory->createVehicle();
-    bus->delivery();
-    tempo->delivery();
+    shared_ptr<DocumentFactory> document_factory=make_shared<PdfFactory>();
+    shared_ptr<Document> document=document_factory->createDocument();
+    document->renderPage();
     return 0;
 }
