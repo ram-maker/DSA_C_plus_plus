@@ -2,82 +2,84 @@
 #include <bits/stdc++.h>
 #include <memory>
 using namespace std;
-class Transportation{
+class AudioCodec{
     public:
-    virtual void delivery()=0;
+    virtual int getFrameSampleSize()=0;
 
 };
-class PetrolBus:public Transportation{
+
+class VideoCodec{
     public:
-    void delivery(){
-        cout<<"Delivery by Petrol Bus"<<endl;
-    }
-};
-class ElectricBus:public Transportation{
-    public:
-    void delivery(){
-        cout<<"Delivery by Electric Bus"<<endl;
-    }
-
-
-};
-class PetrolCar:public Transportation{
-    public:
-    void delivery(){
-        cout<<"Delivery by Petrol Car"<<endl;
-    }
-
-
-};
-class ElectricScooty:public Transportation{
-    public:
-    void delivery(){
-        cout<<"Delivery by Electric Scooty"<<endl;
-    }
-
-    
+    virtual int getFrameRate()=0;
 };
 
-class TransportationFactory{
+class AAC:public AudioCodec{
     public:
-    virtual shared_ptr<Transportation>  createPublicTransportation()=0;
-    virtual shared_ptr<Transportation>  createPrivateTransportaion()=0;
+    int getFrameSampleSize(){
+        return 1024;
+    }
+
 };
 
-class ElectricTransportFactory:public TransportationFactory{
+class H264:public VideoCodec{
     public:
-    shared_ptr<Transportation> craetePublicTransportation(){
-        return make_shared<ElectricBus>();
-
-    }
-    shared_ptr<Transportation> createPrivateTransportation(){
-        return make_shared<ElectricScooty>();
-
+    int getFrameRate(){
+        return 30;
     }
 };
-class PetrolTransportFactory:public TransportationFactory{
+
+class MP3:public AudioCodec{
     public:
-    shared_ptr<Transportation> craetePublicTransportation(){
-        return make_shared<PetrolBus>();
-    }
-    shared_ptr<Transportation> createPrivateTransportation(){
-        return make_shared<PetrolCar>();
-        
+    int getFrameSampleSize(){
+        return 1152;
     }
 };
+
+class H265:public VideoCodec{
+    public:
+    int getFrameRate(){
+        return 60;
+    }
+};
+
+class CodecFactory{
+    public:
+    virtual shared_ptr<AudioCodec> createAudioCodec()=0;
+    virtual shared_ptr<VideoCodec> createVideoCodec()=0;
+};
+
+class LeightWeightCodec:public CodecFactory{
+    public:
+    shared_ptr<AudioCodec> createAudioCodec(){
+        return make_shared<AAC>();
+    }
+    shared_ptr<VideoCodec> createVideoCodec(){
+        return make_shared<H264>();
+    }
+
+};
+
+class HighQualityCodec:public CodecFactory{
+     public:
+    shared_ptr<AudioCodec> createAudioCodec(){
+        return make_shared<MP3>();
+    }
+    shared_ptr<VideoCodec> createVideoCodec(){
+        return make_shared<H265>();
+    }
+};
+
 int main(){
-    shared_ptr<TransportationFactory> electric_transportation_factory=make_shared<ElectricTransportFactory>();
-    shared_ptr<Transportation> ev_scooty=electric_transportation_factory->createPrivateTransportaion();
-    shared_ptr<Transportation> ev_bus=electric_transportation_factory->createPrivateTransportaion();
-    
-    shared_ptr<TransportationFactory> petrol_transportation_factory=make_shared<PetrolTransportFactory>();
-    shared_ptr<Transportation> petrol_bus=petrol_transportation_factory->createPublicTransportation();
-    shared_ptr<Transportation> petrol_car=petrol_transportation_factory->createPrivateTransportaion();
+    shared_ptr<CodecFactory> high_quality_codec=make_shared<LeightWeightCodec>();
+  shared_ptr<AudioCodec> mp3_codec=high_quality_codec->createAudioCodec();
+  shared_ptr<VideoCodec> h265_codec=high_quality_codec->createVideoCodec();
+  cout<<"Frame size of mp3 codec="<<mp3_codec->getFrameSampleSize()<<endl;
+  cout<<"Frame size of h265 codec="<<h265_codec->getFrameRate()<<endl;
 
-    ev_scooty->delivery();
-    ev_bus->delivery();
-    petrol_bus->delivery();
-    petrol_car->delivery();
-
+   shared_ptr<CodecFactory> low_quality_codec=make_shared<HighQualityCodec>();
+  shared_ptr<AudioCodec> aac_codec=low_quality_codec->createAudioCodec();
+  shared_ptr<VideoCodec> h264_codec=low_quality_codec->createVideoCodec();
+  cout<<"Frame size of aac codec="<<aac_codec->getFrameSampleSize()<<endl;
+  cout<<"Frame size of h264 codec="<<h264_codec->getFrameRate()<<endl;
 
 }

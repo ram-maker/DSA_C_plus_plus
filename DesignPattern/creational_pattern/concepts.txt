@@ -12,4 +12,9 @@ Would you like an example in code or more clarification on any of these?
 object slicing
  Object slicing is the phenomenon that occurs when an object of a derived class is assigned or passed to an object of the base class type, leading to the loss of the derived class-specific data and behavior.
 
- 
+ Factory method:
+ The tight coupling of client and object creation is removed, the concretfactorycreator are responsible for creation of object,
+ Product of differnet type can be crated using respective Factory method, while other being same
+
+ Abstarct Factory Method:
+ Creates multiple product based on the interest:
