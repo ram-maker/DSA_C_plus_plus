@@ -1,52 +1,68 @@
 /*Prototype pattern is used because:
 1.Creating an object is expensive then copying it
 2.Almost most the object creation is same
+3.Some may argue that if overall idea is to copy the existing copy constructor then why not use copy constructor.Well the copy constructor needs
+is tightly coupled with its object while prototype pattern isnt
 */
 #include <iostream>
+#include <memory>
 using namespace std;
-class Shape {
+
+class Media {
 public:
-    virtual Shape* clone() const = 0; // Clone method for creating copies.
-    virtual void draw() const = 0;   // Draw method for rendering the shape.
-    virtual ~Shape() {}              // Virtual destructor for proper cleanup.
-};
-class Circle : public Shape {
-private:
-    double radius;
+    virtual shared_ptr<Media> clone() = 0;
+    virtual void display() = 0;
 
-public:
-    Circle(double r) : radius(r) {}
+    virtual void setSource(const string& source) = 0;
+    virtual void setSize(int size) = 0;
+    virtual void setExtension(const string& extension) = 0;
 
-    Shape* clone() const override {
-        return new Circle(*this);
-    }
-
-    void draw() const override {
-        std::cout << "Drawing a circle with radius " << radius << std::endl;
-    }
-};
-class Rectangle : public Shape {
-private:
-    double width;
-    double height;
-
-public:
-    Rectangle(double w, double h) : width(w), height(h) {}
-
-    Shape* clone() const override {
-        return new Rectangle(*this);
-    }
-
-    void draw() const override {
-        std::cout << "Drawing a rectangle with width " << width << " and height " << height << std::endl;
-    }
+    virtual ~Media() = default;
 };
 
-int main(){
-    Circle circlePrototype(5.0);
-    Rectangle rectanglePrototype(4.0, 6.0);
-    Shape* shape1 = circlePrototype.clone();
-    Shape* shape2 = rectanglePrototype.clone();
-    shape1->draw();
-    shape2->draw();
+class ImageMedia : public Media {
+    string source;
+    int image_size;
+    string extension;
+
+public:
+    ImageMedia() : source(""), image_size(0), extension("") {}
+
+    void setSource(const string& source) override {
+        this->source = source;
+    }
+
+    void setSize(int image_size) override {
+        this->image_size = image_size;
+    }
+
+    void setExtension(const string& extension) override {
+        this->extension = extension;
+    }
+
+    shared_ptr<Media> clone() override {
+        return make_shared<ImageMedia>(*this); // Correctly clone the derived class
+    }
+
+    void display() override {
+        cout << "Image Source: " << source << "\n"
+             << "Image Size: " << image_size << "\n"
+             << "Extension: " << extension << endl;
+    }
+};
+
+int main() {
+    shared_ptr<Media> png_media = make_shared<ImageMedia>();
+    png_media->setSource("Img/");
+    png_media->setSize(1024);
+    png_media->setExtension(".png");
+    png_media->display();
+
+    shared_ptr<Media> jpeg_media = png_media->clone();
+    jpeg_media->setExtension("jpeg");
+    cout << "\nCloned and Mutated Media:\n";
+    jpeg_media->display();
+
+    return 0;
 }
+
