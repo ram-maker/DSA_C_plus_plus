@@ -1,0 +1,11 @@
+Essence of Design Patterns in software developemnt
+
+In ever evolving field of software developemnt it's not true that the class that you have defined remain unmodified, a modification is required as per
+the requirements, so if a modicitaion is done directly to the concrete class so as to fullfill the requirements, its fine, but waht if that class has codespace that depends on them
+Now here we come the modification done to fullfill for the requirements A , will have chance of yielding error for codespaceB,codespaceC. Its no matter of time that
+your entire software projects gets messed up. Thus a design pattern helps to solve this problem.
+
+Loose Coupling
+One solution to this is to introduce loose coupling between the object and its concreteclass. Coupling of object is nothing but a its level of dependence on its class.
+Its always to have loose coupling between the object and its concrete class,If object depeends heavily on concrete class, a slight modification would result in 
+massive chaos.
