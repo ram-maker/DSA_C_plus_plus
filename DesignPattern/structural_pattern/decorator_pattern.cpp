@@ -13,7 +13,6 @@ using namespace std;
 class Notifier{
     public:
     virtual void sendNotification()=0;
-    // vurtual void send
 };
 
 class MessageNotifier:public Notifier{
@@ -39,33 +38,36 @@ class NotifierDecorator:public Notifier{
 
 class FacebookNotifierDecorator:public NotifierDecorator{
     public:
-    FacebookNotifierDecorator(shared_ptr<Notifier> notifier){
+    FacebookNotifierDecorator(shared_ptr<Notifier> notifier,string message){
         this->notifier=notifier;
+        this->message=message;
     }
 
     void sendNotification(){
         notifier->sendNotification();
-        cout<<"Sending notification from Facebook Channel"<<endl;
+        cout<<"Sending notification from Facebook Channel,message:"<<message<<endl;
     }
 
 };
 
 class EmailNotifierDecorator:public NotifierDecorator{
     public:
-    EmailNotifierDecorator(shared_ptr<Notifier> notifier){
+    EmailNotifierDecorator(shared_ptr<Notifier> notifier,string message){
         this->notifier=notifier;
+        this->message=message;
     }
 
     void sendNotification(){
         notifier->sendNotification();
-        cout<<"Sending notification from Email Channel"<<endl;
+        cout<<"Sending notification from Email Channel,message:"<<message<<endl;
     }
 };
 
 int main(){
-    shared_ptr<Notifier> notifier_message=make_shared<MessageNotifier>("Your order has been placed");
-    notifier_message=make_shared<FacebookNotifierDecorator>(notifier_message);
-    notifier_message=make_shared<EmailNotifierDecorator>(notifier_message);
+    string message="Your order has been placed";
+    shared_ptr<Notifier> notifier_message=make_shared<MessageNotifier>(message);
+    notifier_message=make_shared<FacebookNotifierDecorator>(notifier_message,message);
+    notifier_message=make_shared<EmailNotifierDecorator>(notifier_message,message);
     notifier_message->sendNotification();
 }
 
