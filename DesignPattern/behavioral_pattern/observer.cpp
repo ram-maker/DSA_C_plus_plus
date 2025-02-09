@@ -4,6 +4,7 @@ This pattern works on pub-sub mechanism, there will be single publisher and mult
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <algorithm>
 using namespace std;
 /*Observer*/
 class Customer{
@@ -51,6 +52,15 @@ class Store{
     void addCustomer(shared_ptr<Customer> customer){
         customers.push_back(customer);
     }
+    void removeCustomer(shared_ptr<Customer> customer){
+        auto it=remove(customers.begin(),customers.end(),customer);
+        if (it!=customers.end()){
+            customers.erase(it, customers.end());
+            cout<<"Unsubscribed sucessfully"<<endl;
+        }else{
+            cout<<"Customers not found"<<endl;
+        }
+    }
   
 };
  
@@ -63,4 +73,8 @@ int main(){
     s.addCustomer(desktop_costumer);
     s.addCustomer(laptop_costumer);
     s.confirmProductEntry("Iphone 12");
+    s.removeCustomer(iphone_costumer);
+    s.removeCustomer(laptop_costumer);
+    cout<<endl;
+    s.confirmProductEntry("Sugar Smartphone");
 } 
