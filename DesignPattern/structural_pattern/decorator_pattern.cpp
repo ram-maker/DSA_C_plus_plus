@@ -6,6 +6,7 @@ For instance, if you want to send the notification from differenct channel then,
 notification classes with eeach representing channel:FacebookNotification, MessageNotiifcation, WhatsappNotification, What if you want to add 
 Facebook+MessageNotificaiton; the sub classes are likely to increase; so decorator pattern helps to overcome this tendency;intially it wraps a concrete type with a decorator;
 then another decorator wraps the prior one; More example from the code
+Wraps object inside an object;
 */
 #include <iostream>
 #include <memory>
