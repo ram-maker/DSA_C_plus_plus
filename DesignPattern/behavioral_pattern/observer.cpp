@@ -1,5 +1,10 @@
 /*
 This pattern works on pub-sub mechanism, there will be single publisher and multiple subscribers
+can be handy for the use cases where observers are intrested in getting notification when subject change it state
+it has subject, a publisher
+observer, more like a subscriber
+concrete observer, the subclass of observer
+subject has provision for registering or removing observer, so that only the delegated subscriber can access
 */
 #include <iostream>
 #include <vector>
