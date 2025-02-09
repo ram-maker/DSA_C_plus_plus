@@ -42,14 +42,15 @@ class ComicBookParser:public BookParser{
     }
 };
 class BookParserProxy:public BookParser{
-    shared_ptr<ComicBookParser> book_parser;
+    shared_ptr<BookParser> book_parser;
     string book_content;
     void createObjectIfNotExists(){
         if (!book_parser){
-            book_parser=make_shared<ComicBookParser>();
+            book_parser=make_shared<ComicBookParser>(book_content);
         }
     }
     public:
+    BookParserProxy(){}
     BookParserProxy(string book_content){
         this->book_content=book_content;
     }
@@ -65,5 +66,6 @@ class BookParserProxy:public BookParser{
 int main(){
     shared_ptr<BookParser> book_parser_proxy=make_shared<BookParserProxy>("this is the best we can do as a human, good luck with it");
     int book_length=book_parser_proxy->getBookLength();
-    cout<<"Book Length:"<<book_length<<endl;
+    int book_size=book_parser_proxy->getBookSize();
+    cout<<"Book Length:"<<book_length<<",Book size:"<<book_size<<endl;
 }
