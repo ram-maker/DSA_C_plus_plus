@@ -39,6 +39,7 @@ class CharacterBuffer{
     }
     
 };
+
 class UpperCaseBuffer:public CharacterBuffer{
     public:
     void getFinalWord(char *word,int word_length){
