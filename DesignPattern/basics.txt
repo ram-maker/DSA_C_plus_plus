@@ -9,3 +9,8 @@ Loose Coupling
 One solution to this is to introduce loose coupling between the object and its concreteclass. Coupling of object is nothing but a its level of dependence on its class.
 Its always to have loose coupling between the object and its concrete class,If object depeends heavily on concrete class, a slight modification would result in 
 massive chaos.
+
+Dispatch:
+In object-oriented programming, dispatch is the process of figuring out which method to call when we run a program. Imagine you have a method called makeSound()
+ in different animal classes, like Dog and Cat. When you call makeSound() on an animal object, dispatching decides whether you 
+get a “bark” or a “meow” at runtime, depending on whether the object is a Dog or a Cat.
