@@ -1,0 +1,6 @@
+/*
+State design pattern
+In software engineering application an object has certain state and are likely to change in accordance to certain action. The primitive method to deal with such problems
+is load of conditional ifs. BY leveraging a state pattern we are able to eliminate the use of conditional ifs. The state of the object change to another state in accordance
+to certain action
+*/
